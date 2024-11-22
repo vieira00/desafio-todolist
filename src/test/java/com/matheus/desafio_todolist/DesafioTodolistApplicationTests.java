@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class DesafioTodolistApplicationTests {
@@ -32,6 +34,14 @@ class DesafioTodolistApplicationTests {
 
 	@Test
 	void testCreateTodoFailure() {
+
+		webTestClient
+				.post()
+				.uri("/todos")
+				.bodyValue(
+						new Todo("", "",false, 0)
+				).exchange()
+				.expectStatus().isBadRequest();
 	}
 
 }
